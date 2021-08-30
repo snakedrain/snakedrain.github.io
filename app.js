@@ -1,6 +1,15 @@
 function q(e) {
     if (e.key == 'q')
         game_over = true
+        if(e.key=="ArrowRight")
+             snake.direction="right";
+            else if(e.key=="ArrowLeft")
+             snake.direction="left";
+             else if(e.key=="ArrowUp")
+             snake.direction="up";
+             else
+             snake.direction="down";
+             snake.updateSnake()
     console.log(e.key)
 }
 
@@ -13,7 +22,7 @@ function init() {
 
     snake={
         init_len:5,
-        color:'red',
+        color:'blue',
         cells:[],
         direction:"right",
     
@@ -32,17 +41,42 @@ function init() {
             // console.log("poppping")
             var headX= this.cells[0].x;
             var headY= this.cells[0].y;
+            if(this.direction=="right"){
             var X = headX+1;
             var Y= headY;
-            this.cells.unshift({x:X,y:Y})
+            }
+            else if (this.direction=="left") {
+                var X = headX-1;
+            var Y= headY;
+            }
+            else if (this.direction=="up") {
+                var X = headX;
+            var Y= headY-1;
+            }
+            else{
+                var X = headX;
+            var Y= headY+1;
+            }
+            this.cells.unshift({x:X,y:Y})            
         }
     }
+   food={
+       color:'red',
+       x:50,
+       y:50,
+
+       createFood:function(){
+           
+       }
+   }
+
 snake.createSnake()
 
 }
 
 function draw() {
     // console.log("drawing")
+    pen.fillStyle=snake.color
     pen.clearRect(0,0,500,500)
     snake.drawSnake()
 }
@@ -50,7 +84,7 @@ function draw() {
 function update() {
     // console.log("UPDATING...") 
     snake.updateSnake()
-   
+  
 }
 
 function gameloop() {
